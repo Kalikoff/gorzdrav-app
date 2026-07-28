@@ -1,7 +1,6 @@
 services:
   app:
     build: .
-    container_name: gorzdrav_bot
     restart: unless-stopped
     ports:
       # Наружу порт не выставляем — доступ только через nginx
