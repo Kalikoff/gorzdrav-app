@@ -1,3 +1,5 @@
+.git
+.gitignore
 .env
 data/
 *.db
@@ -5,4 +7,4 @@ __pycache__/
 *.pyc
 .venv/
 venv/
-.ruff_cache
+README.md

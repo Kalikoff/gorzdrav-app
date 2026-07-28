@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Номерки — Горздрав СПб</title>
+
+  <!-- Telegram Web App SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- ── Переключатель разделов ──────────────────────────────────────── -->
+    <div class="tabs" id="main-tabs">
+      <button class="tab active" data-view="subs">📋 Подписки</button>
+      <button class="tab" data-view="new">➕ Новая</button>
+    </div>
+
+    <!-- ── Раздел: мои подписки ────────────────────────────────────────── -->
+    <section id="view-subs">
+      <div id="subs-list" class="stack">
+        <div class="loading">Загрузка…</div>
+      </div>
+    </section>
+
+    <!-- ── Раздел: мастер создания подписки ────────────────────────────── -->
+    <section id="view-new" class="hidden">
+      <div class="crumbs" id="crumbs"></div>
+      <div id="wizard"></div>
+    </section>
+
+  </div><!-- /.app -->
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

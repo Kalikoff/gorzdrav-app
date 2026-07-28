@@ -1,10 +1,11 @@
-version: '3.8'
-
 services:
-  bot:
+  app:
     build: .
     container_name: gorzdrav_bot
     restart: unless-stopped
-    env_file: .env
+    ports:
+      - "${PORT:-3002}:${PORT:-3002}"
     volumes:
       - ./data:/app/data
+    env_file:
+      - .env
