@@ -73,8 +73,10 @@ class GorzdravAPI:
             logger.warning("Запрос %s не удался: %s", path, exc)
             return []
 
+        # success=false горздрав отдаёт и на штатное «свободных талонов нет»,
+        # так что это не повод шуметь в логах — уровень отладочный.
         if not payload.get("success", True):
-            logger.warning("Горздрав вернул ошибку на %s: %s", path, payload.get("message"))
+            logger.debug("Горздрав на %s: %s", path, payload.get("message"))
         return payload.get("result") or []
 
     async def districts(self) -> list[dict]:
