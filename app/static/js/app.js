@@ -108,6 +108,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   tg.BackButton?.onClick?.(goBack);
+  document.getElementById("ref-find").addEventListener("click", lookupReferral);
+  document.getElementById("ref-lastname").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") lookupReferral();
+  });
   loadSubscriptions();
 });
 
@@ -118,9 +122,15 @@ function switchView(next) {
   });
   document.getElementById("view-subs").classList.toggle("hidden", next !== "subs");
   document.getElementById("view-new").classList.toggle("hidden", next !== "new");
+  document.getElementById("view-referral").classList.toggle("hidden", next !== "referral");
 
   if (next === "new") goStep(step);
   else syncBackButton();
+
+  if (next === "referral") {
+    loadWatchedReferrals();
+    loadBookings();
+  }
 }
 
 function syncBackButton() {

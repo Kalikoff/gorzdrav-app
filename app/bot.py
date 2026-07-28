@@ -15,7 +15,6 @@ from aiogram.types import (
 
 from app.config import settings
 from app.database import register_user
-from app.services.slots import describe_window
 
 logger = logging.getLogger(__name__)
 
@@ -112,16 +111,28 @@ async def fallback(message: Message) -> None:
         await message.answer("Отправь /start")
 
 
-async def send_slots_message(subscription: dict, doctors: list[dict]) -> None:
-    """Уведомление о новых номерках по подписке."""
-    lines = ["🔔 <b>Появились новые номерки!</b>", ""]
-    lines.append(f"🏥 {escape(subscription.get('lpu_name') or 'Поликлиника')}")
+def subscription_header(subscription: dict) -> list[str]:
+    lines = [f"🏥 {escape(subscription.get('lpu_name') or 'Поликлиника')}"]
     lines.append(f"🩺 {escape(subscription['speciality_name'])}")
     if subscription.get("doctor_name"):
         lines.append(f"👤 {escape(subscription['doctor_name'])}")
-    lines.append(
-        f"⏰ {escape(describe_window(subscription['time_from'], subscription['time_to']))}"
-    )
+    return lines
+
+
+def referral_header(referral: dict) -> list[str]:
+    lines = [f"📄 Направление №{escape(referral['number'])}"]
+    if referral.get("lpu_name"):
+        lines.append(f"🏥 {escape(referral['lpu_name'])}")
+    if referral.get("speciality_name"):
+        lines.append(f"🩺 {escape(referral['speciality_name'])}")
+    return lines
+
+
+async def send_slots_message(
+    user_id: int, header: list[str], window: str, doctors: list[dict]
+) -> None:
+    """Уведомление о новых номерках."""
+    lines = ["🔔 <b>Появились новые номерки!</b>", "", *header, f"⏰ {escape(window)}"]
 
     total = sum(len(doctor["slots"]) for doctor in doctors)
     limit = settings.MAX_SLOTS_IN_MESSAGE
@@ -160,7 +171,7 @@ async def send_slots_message(subscription: dict, doctors: list[dict]) -> None:
     ])
 
     await bot.send_message(
-        subscription["user_id"],
+        user_id,
         "\n".join(lines),
         parse_mode="HTML",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=keyboard),

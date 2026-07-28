@@ -109,3 +109,39 @@ async def collect_slots(
             })
 
     return found
+
+
+def collect_referral_slots(referral: dict, time_from: str, time_to: str) -> list[dict]:
+    """То же окно времени, но для направления — слоты приходят вложенными в ответ.
+
+    Форма результата совпадает с collect_slots, поэтому уведомления и
+    сериализация для мини-приложения работают без изменений.
+    """
+    start = parse_time(time_from, DAY_START)
+    end = parse_time(time_to, DAY_END)
+    now = now_msk()
+
+    found = []
+    for speciality in referral["specialities"]:
+        for doctor in speciality["doctors"]:
+            slots = [
+                {
+                    "key": slot["start"].strftime("%Y-%m-%dT%H:%M"),
+                    "start": slot["start"],
+                    "room": slot["room"],
+                    "appointment_id": slot["id"],
+                    "address": slot["address"],
+                    "number": slot["number"],
+                }
+                for slot in doctor["slots"]
+                if slot["start"] > now and in_window(slot["start"].time(), start, end)
+            ]
+            if slots:
+                found.append({
+                    "doctor_id": doctor["id"],
+                    "doctor_name": doctor["name"],
+                    "speciality_name": speciality["name"],
+                    "slots": slots,
+                })
+
+    return found

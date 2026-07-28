@@ -339,6 +339,18 @@ body {
   color: var(--success);
 }
 
+/* Кликабельный номерок — запись по направлению */
+.slot-btn {
+  border: 1px solid color-mix(in srgb, var(--success) 45%, transparent);
+  cursor: pointer;
+  font-family: inherit;
+  padding: 8px 13px;
+  font-size: 14px;
+  transition: opacity .12s;
+}
+.slot-btn:active { opacity: .6; }
+.slot-btn:disabled { opacity: .4; cursor: default; }
+
 /* ── Пустые состояния ───────────────────────────────────────────────────── */
 .empty {
   text-align: center;

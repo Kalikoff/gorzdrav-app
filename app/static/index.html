@@ -17,6 +17,7 @@
     <div class="tabs" id="main-tabs">
       <button class="tab active" data-view="subs">📋 Подписки</button>
       <button class="tab" data-view="new">➕ Новая</button>
+      <button class="tab" data-view="referral">📄 Направление</button>
     </div>
 
     <!-- ── Раздел: мои подписки ────────────────────────────────────────── -->
@@ -32,8 +33,34 @@
       <div id="wizard"></div>
     </section>
 
+    <!-- ── Раздел: запись по направлению ───────────────────────────────── -->
+    <section id="view-referral" class="hidden">
+      <div class="stack">
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Запись по направлению</div>
+              <div class="card-subtitle">Номер направления и фамилия пациента</div>
+            </div>
+          </div>
+          <input type="text" id="ref-number" class="search" inputmode="numeric"
+                 placeholder="Номер направления" autocomplete="off" />
+          <input type="text" id="ref-lastname" class="search" placeholder="Фамилия"
+                 autocomplete="off" />
+          <button class="btn btn-primary" id="ref-find">Найти направление</button>
+        </div>
+
+        <div id="ref-result"></div>
+        <div id="ref-watched"></div>
+        <div id="ref-bookings"></div>
+
+      </div>
+    </section>
+
   </div><!-- /.app -->
 
   <script src="/js/app.js"></script>
+  <script src="/js/referral.js"></script>
 </body>
 </html>
