@@ -34,6 +34,11 @@ class GorzdravError(Exception):
     """Горздрав отказал. Текст пригоден для показа пользователю."""
 
 
+# МИС поликлиники не отвечает. Сообщение горздрава на этот код длинное и
+# звучит как проблема приложения, хотя сайт горздрава отказывает так же.
+MIS_UNAVAILABLE = 616
+
+
 def now_msk() -> datetime:
     return datetime.now(MSK)
 
@@ -210,6 +215,11 @@ class GorzdravAPI:
         if payload is None:
             raise GorzdravError("Горздрав не отвечает — запись не создана")
         if not payload.get("success", True):
+            if payload.get("errorCode") == MIS_UNAVAILABLE:
+                raise GorzdravError(
+                    "Поликлиника не принимает записи — сбой в её системе. "
+                    "На сайте горздрава запись сейчас тоже не проходит."
+                )
             raise GorzdravError(payload.get("message") or "Горздрав отклонил запись")
         self._token = ""  # токен погашен, следующий придёт со следующим GET
 
