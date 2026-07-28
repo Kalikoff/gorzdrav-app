@@ -9,6 +9,6 @@ COPY . .
 
 RUN mkdir -p data
 
-EXPOSE 3002
+EXPOSE 3003
 
 CMD ["python", "run.py"]

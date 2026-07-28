@@ -37,7 +37,7 @@ SKIP_AUTH=true BOT_TOKEN=any DATABASE_PATH=./data/subscriptions.db python run.py
 ```
 
 С `SKIP_AUTH=true` подпись initData не проверяется, и мини-приложение
-открывается прямо в браузере на `http://localhost:3002`. В продакшене
+открывается прямо в браузере на `http://localhost:3003`. В продакшене
 переменная должна быть `false`.
 
 ## Переменные окружения
@@ -46,7 +46,7 @@ SKIP_AUTH=true BOT_TOKEN=any DATABASE_PATH=./data/subscriptions.db python run.py
 |---|---|---|
 | `BOT_TOKEN` | — | Токен бота от @BotFather |
 | `WEBAPP_URL` | — | HTTPS-адрес мини-приложения |
-| `HOST` / `PORT` | `0.0.0.0` / `3002` | Адрес веб-сервера |
+| `HOST` / `PORT` | `0.0.0.0` / `3003` | Адрес веб-сервера |
 | `DATABASE_PATH` | `/app/data/subscriptions.db` | Файл SQLite |
 | `CHECK_INTERVAL` | `300` | Пауза между проверками расписания, секунды |
 | `REQUEST_DELAY` | `0.4` | Пауза между запросами к горздраву, секунды |

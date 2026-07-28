@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     WEBAPP_URL: str = ""
 
     HOST: str = "0.0.0.0"
-    PORT: int = 3002
+    PORT: int = 3003
 
     DATABASE_PATH: str = "/app/data/subscriptions.db"
 
